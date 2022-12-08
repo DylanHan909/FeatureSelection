@@ -20,22 +20,25 @@ def accuracy(data, features, feature_to_add): #k cross fold algorithm in lecture
         label_object_to_classify = data[i][0]
         #print('Looping over i at the ' + str(i + 1) + ' location')
         #print('The ' + str(i + 1) + 'th object is in class ' + str(label_object_to_classify))
-        #print('The object features are ' + str(object_to_classify))
         #https://www.geeksforgeeks.org/python-infinity/
         nearest_neighbor_distance = float('inf')
         nearest_neightbor_location = float('inf')
         for k in range(rows):
-                features_per_checked_object = np.array
-                for j in data[i]:
-                    features_per_checked_object = np.append(features_per_checked_object, j)
-                object_to_check = np.delete(features_per_object, [0,1])
-                if k != i:
-                    #print('Ask if ' + str(i + 1) + ' is nearest neighbor with ' + str(k + 1))
-                    distance = math.sqrt(sum(object_to_classify - object_to_check) ** 2)
-                    if (distance < nearest_neighbor_distance):
-                        nearest_neighbor_distance = distance
-                        nearest_neightbor_location = k
-                        nearest_neighbor_label = data[nearest_neightbor_location][0]
+            features_per_checked = np.array
+            for l in data[k]:
+                features_per_checked = np.append(features_per_checked, l)
+            object_to_check = np.delete(features_per_checked, [0,1])
+            if k != i:
+                #print('Ask if ' + str(i + 1) + ' is nearest neighbor with ' + str(k + 1))
+                #https://www.geeksforgeeks.org/calculate-the-euclidean-distance-using-numpy/
+                distance = np.linalg.norm(object_to_classify - object_to_check)
+                if (distance < nearest_neighbor_distance):
+                    nearest_neighbor_distance = distance
+                    nearest_neightbor_location = k
+                    nearest_neighbor_label = data[nearest_neightbor_location][0]
+        print('Object ' + str(i + 1) + ' is class ' + str(label_object_to_classify))
+        print('Its nearest neighbor is Object ' + str(nearest_neightbor_location + 1) + ' which is in class ' + str(nearest_neighbor_label))
+
 def main():
     print("Welcome to Dylan's Feature Selection Algorithm.")
     instances, features, data = readData()
