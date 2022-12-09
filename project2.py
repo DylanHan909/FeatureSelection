@@ -1,7 +1,6 @@
 import numpy as np
 import math
 import time
-
 #Giant Chunk of the Code was directly utilized from Proessor Eamonn's Project Debriefing
 #Links here: https://www.dropbox.com/sh/0y41twimzv13ukh/AAAbkUTfSxgs6tEW9wx9G6ETa/Project_2_Briefing.mp4?dl=0
 #          : https://www.dropbox.com/sh/rltooq0t3khobuj/AABg6MGQ2ysGGEF6eiI0CHq5a/Project_2_Briefing.pptx?dl=0
@@ -35,10 +34,10 @@ def cross_fold_accuracy(data, current_set, feature_to_add): #k cross fold algori
         nearest_neighbor_distance = float('inf')
         nearest_neighbor_location = float('inf')
         for k in range(len(data)):
-            object_to_check = [] #Done via suggestion by a classmate to put all instances of features into its own list to lessen the hassle of manipulating data
-            for features in current_set:
-                object_to_check.append(data[k][features])
             if k != i:
+                object_to_check = [] #Done via suggestion by a classmate to put all instances of features into its own list to lessen the hassle of manipulating data
+                for features in current_set:
+                    object_to_check.append(data[k][features])
                 #Euclidean Distance in Python with lists, other method didn't work with them https://www.geeksforgeeks.org/python-math-dist-method/
                 distance = math.dist(object_to_classify, object_to_check)
                 if (distance < nearest_neighbor_distance):
@@ -46,10 +45,10 @@ def cross_fold_accuracy(data, current_set, feature_to_add): #k cross fold algori
                     nearest_neighbor_location = k
                     nearest_neighbor_label = data[nearest_neighbor_location][0]
         #print('Object ' + str(i + 1) + ' is class ' + str(label_object_to_classify))
-        #print('Its nearest neighbor is Object ' + str(nearest_neightbor_location + 1) + ' which is in class ' + str(nearest_neighbor_label))
+        #print('Its nearest neighbor is Object ' + str(nearest_neighbor_location + 1) + ' which is in class ' + str(nearest_neighbor_label))
         if (label_object_to_classify == nearest_neighbor_label):
             number_correctly_classified += 1
-    accuracy = number_correctly_classified / len(data)
+    accuracy = float(number_correctly_classified) / float(len(data))
     return accuracy
 
 def forward_search(data):
@@ -104,7 +103,7 @@ def backward_search(data):
             removed_feature = current_set_of_features.copy()
             removed_feature.remove(k)
             accuracy = cross_fold_accuracy(data, removed_feature, -1)
-            print('Removing ' + str(k) + 'while using feature(s) ' + str(current_set_of_features) + ' accuracy is ' + str(round(accuracy * 100, 1)) + '%')
+            print('Removing ' + str(k) + ' while using feature(s) ' + str(current_set_of_features) + ' accuracy is ' + str(round(accuracy * 100, 1)) + '%')
             if accuracy > best_so_far_accuracy:
                 best_so_far_accuracy = accuracy
                 best_solution = current_set_of_features.copy()
