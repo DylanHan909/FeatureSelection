@@ -71,6 +71,8 @@ def forward_search(data):
         if best_so_far_accuracy >= best_accuracy: #Done to compute the best accuracy overall, not just from each feature iteration
             best_accuracy = best_so_far_accuracy
             best_solution.append(feature_to_add_at_this_level)
+        else:
+            print("(Warning, Accuracy has decreased! Continuing search in case of local maxima)")
         current_set_of_features.append(feature_to_add_at_this_level)
         print('Feature set ' + str(current_set_of_features) + ' was best, accuracy is ' + str(round(best_so_far_accuracy * 100, 1)) + '%')
         print('\n')
@@ -111,6 +113,8 @@ def backward_search(data):
         if best_so_far_accuracy >= best_accuracy: #Done to compute the best accuracy overall, not just from each feature iteration
             best_accuracy = best_so_far_accuracy
             best_solution = current_set_of_features.copy()
+        else:
+            print("(Warning, Accuracy has decreased! Continuing search in case of local maxima)")
         current_set_of_features.remove(feature_to_remove_at_this_level)
         print('Feature set ' + str(current_set_of_features) + ' was best, accuracy is ' + str(round(best_so_far_accuracy * 100, 1)) + '%')
         print('\n')
@@ -125,7 +129,6 @@ def backward_search(data):
         print ('The duration of backward elimination took ' + str(round(search_time/60, 2))  + ' minutes')
     else:
         print ('The duration of backward elimination took ' + str(round(search_time/3600, 2))  + ' hours')
-
 
 def main():
     print("Welcome to Dylan's Feature Selection Algorithm.")
