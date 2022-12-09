@@ -142,7 +142,9 @@ def main():
     print('This dataset has ' + str(features - 1) + ' features (not including the class attribute), with ' + str(instances) + ' instances.')
     all_set = [1, 2, 3, 4, 5, 6]
     initial_accuracy = cross_fold_accuracy(data, all_set, -1)
-    print('Running nearest neighbor with all 4 features, using "leaving-one-out" evaluation, I get an accuracy of ' + str(round(initial_accuracy * 100, 1)) + '%')
+    no_accuracy = cross_fold_accuracy(data, [], -1)
+    print('Running nearest neighbor with no features, using "leaving-one-out" evaluation, I get an accuracy of ' + str(round(no_accuracy * 100, 1)) + '%')
+    print('Running nearest neighbor with all features, using "leaving-one-out" evaluation, I get an accuracy of ' + str(round(initial_accuracy * 100, 1)) + '%')
     print('Beginning search.')
     if (algorithm_type == 1):
         forward_search(data)
